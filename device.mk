@@ -96,7 +96,7 @@ TW_HAS_EDL_MODE := true
 TW_EXCLUDE_APEX := true
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/msm-therm/temp"
 
-TW_LOAD_VENDOR_MODULES := "touchscreen.ko aw8697.ko"
+TW_LOAD_VENDOR_MODULES := "touchscreen.ko aw8697.ko adsp_loader_dlkm.ko oplus_chg.ko"
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
