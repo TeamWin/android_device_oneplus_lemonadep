@@ -34,6 +34,13 @@ service variant-script /system/bin/variant-script.sh
     oneshot
     seclabel u:r:recovery:s0
 
+service overrideprops /system/bin/set-timestamp.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     # Create location for fs_mgr to store abbreviated output from filesystem
@@ -54,11 +61,12 @@ on fs
     # Set fscklog permission
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
-    start boot-hal-1-1
+    start boot-hal-1-2
 
 on boot
     start variant-script
     setprop sys.usb.config mtp,adb
+    start overrideprops
 
 on property:twrp.modules.loaded=true
     # Load ADSP firmware for PMIC
