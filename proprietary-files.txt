@@ -1,5 +1,5 @@
 # All proprietary files from this list, unless pinned and noted otherwise,
-# are from OnePlus 9 Pro (LE2125_11.C.48).
+# are from OnePlus 9 Pro (LE2125_11.C.63).
 
 # ACDB
 odm/etc/acdbdata/Audio_Parameter_Version.txt
@@ -14,14 +14,42 @@ odm/etc/acdbdata/Speaker_cal.acdb
 # Audio firmware
 odm/firmware/tfa98xx.cnt
 
+# Audio lvimfs params
+odm/etc/lvimfs_params/LVACFS_Configuration.txt
+odm/etc/lvimfs_params/LVIMFS_Calibration_2mic.dat
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID10_MIC_VR.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID11_HE.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID12_HE_APP1.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID13_HE_APP2.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID14_HE_Cam.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID15_HE_Conference.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID16_HE_Fast.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID17_HE_Interview.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID18_HE_Unprocess.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID19_HE_Voice.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID1_MIC_Normal.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID20_HE_VR.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID21_USB_Normal.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID22_USB_APP1.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID23_BT_Normal.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID24_BT_APP1.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID2_MIC_APP1.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID3_MIC_APP2.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID4_MIC_Cam.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID5_MIC_Conference.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID6_MIC_Fast.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID7_MIC_Interview.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID8_MIC_Unprocess.txt
+odm/etc/lvimfs_params/LVIMFS_Parameter_ID9_MIC_Voice.txt
+
 # Camera
 odm/etc/camera/config/camera_unit_config
 odm/etc/camera/config/oplus_camera_aps_config
 odm/etc/camera/config/oplus_camera_config
-odm/etc/camera/calibrationOutput_wt.bin
+odm/etc/camera/CameraHWConfiguration.config
 odm/etc/camera/calibrationOutput_uw.bin
 odm/etc/camera/calibrationOutput_uw_686.bin
-odm/etc/camera/CameraHWConfiguration.config
+odm/etc/camera/calibrationOutput_wt.bin
 odm/etc/camera/engineer_camera_config
 odm/etc/camera/settings_fdc.txt
 odm/etc/init/calibrationOutput_wt.rc
@@ -32,8 +60,8 @@ odm/lib64/camera/com.qti.sensormodule.lemonadep.qtech_ov08a10.bin
 odm/lib64/camera/com.qti.sensormodule.lemonadep.semco_imx789.bin
 odm/lib64/camera/com.qti.sensormodule.lemonadep.semco_imx789_MP.bin
 odm/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766.bin
-odm/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766_ak7375c.bin
 odm/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766_MP.bin
+odm/lib64/camera/com.qti.sensormodule.lemonadep.sunny_imx766_ak7375c.bin
 odm/lib64/camera/com.qti.sensormodule.lemonadep.truly_imx471.bin
 odm/lib64/camera/com.qti.tuned.holitech_gc02m1b.bin
 odm/lib64/camera/com.qti.tuned.qtech_ov08a10.bin
@@ -80,4 +108,3 @@ odm/etc/sensor/sensor_config.json
 
 # WiFi
 odm/etc/wifi/bdwlan.elf
-odm/etc/wifi/regdb.bin
