@@ -1,0 +1,11 @@
+on boot
+    chown system system /sys/class/leds/vibrator/rtp
+    chown system system /sys/class/leds/vibrator/vmax
+    chown system system /sys/class/leds/vibrator/waveform_index
+
+service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service.oplus
+    class hal
+    user system
+    group system input
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    seclabel u:r:recovery:s0
