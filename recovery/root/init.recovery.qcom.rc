@@ -42,14 +42,14 @@ service overrideprops /system/bin/set-timestamp.sh
     oneshot
     seclabel u:r:recovery:s0
 
-on early-init
-    insmod /vendor/lib/modules/msm_drm.ko dsi_display0=qcom,mdss_dsi_samsung_amb670yf01_dsc_cmd:
 
 on init
+    exec u:r:recovery:s0 -- /system/bin/load-mod.sh
     write /sys/class/backlight/panel0-backlight/brightness 200
     # Create location for fs_mgr to store abbreviated output from filesystem
     # checker programs.
     mkdir /dev/fscklogs 0770 root system
+    setprop vendor.usb.use_ffs_mtp 1
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
@@ -68,9 +68,11 @@ on fs
     start boot-hal-1-2
 
 on boot
-    start variant-script
-    start overrideprops
-    setprop sys.usb.config mtp,adb
+    exec u:r:recovery:s0 -- /system/bin/variant-script.sh
+    exec u:r:recovery:s0 -- /system/bin/set-timestamp.sh
+    #start variant-script
+    #start overrideprops
+    setprop sys.usb.config adb
 
 on property:twrp.modules.loaded=true
     # Load ADSP firmware for PMIC
