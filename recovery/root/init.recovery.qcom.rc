@@ -28,32 +28,20 @@
 import /init.recovery.qcom_decrypt.rc
 import /vendor.qti.hardware.vibrator.service.oplus.rc
 
-service variant-script /system/bin/variant-script.sh
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-
-service overrideprops /system/bin/set-timestamp.sh
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-
-
 on init
-    exec u:r:recovery:s0 -- /system/bin/load-mod.sh
-    write /sys/class/backlight/panel0-backlight/brightness 200
     # Create location for fs_mgr to store abbreviated output from filesystem
     # checker programs.
     mkdir /dev/fscklogs 0770 root system
     setprop vendor.usb.use_ffs_mtp 1
+    exec u:r:recovery:s0 -- /system/bin/load-mod.sh
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+    write /proc/touchpanel/tp_fw_update 0
+    write /sys/class/backlight/panel0-backlight/brightness 200
+
     # Mount firmware
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
@@ -70,8 +58,6 @@ on fs
 on boot
     exec u:r:recovery:s0 -- /system/bin/variant-script.sh
     exec u:r:recovery:s0 -- /system/bin/set-timestamp.sh
-    #start variant-script
-    #start overrideprops
     setprop sys.usb.config adb
 
 on property:twrp.modules.loaded=true
