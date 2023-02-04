@@ -62,33 +62,19 @@ on boot
 
 on property:twrp.modules.loaded=true
     # Load ADSP firmware for PMIC
-    wait /sys/kernel/boot_adsp/boot
+    wait /sys/kernel/boot_adsp/boot 2
     write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery
+    wait /sys/class/power_supply/battery 2
     start health-hal-2-1
 
-    wait /sys/class/leds/vibrator/activate
-    #wait /sys/class/leds/vibrator/brightness
-    #wait /sys/class/leds/vibrator/rtp
-    #wait /sys/class/leds/vibrator/vmax
-    #wait /sys/class/leds/vibrator/waveform_index
-    #wait /sys/class/leds/vibrator/state
-    #wait /sys/class/leds/vibrator/duration
-
-    #write /sys/class/leds/vibrator/activate 0
-    #write /sys/class/leds/vibrator/rtp 0
-    #write /sys/class/leds/vibrator/vmax 1600
-    #write /sys/class/leds/vibrator/waveform_index 1
-    #write /sys/class/leds/vibrator/brightness 1
-    #write /sys/class/leds/vibrator/duration 80
-    #write /sys/class/leds/vibrator/state 1
-
-    #chown system system /sys/class/leds/vibrator/activate
-    chown system system /sys/class/leds/vibrator/brightness
-    chown system system /sys/class/leds/vibrator/rtp
-    chown system system /sys/class/leds/vibrator/vmax
-    chown system system /sys/class/leds/vibrator/waveform_index
+    wait /sys/class/leds/vibrator/ram_update 2
+    write /sys/class/leds/vibrator/ram_update 1
+    wait /sys/class/leds/vibrator/activate 2
+    chown system system /sys/class/leds/vibrator/activate
     chown system system /sys/class/leds/vibrator/state
     chown system system /sys/class/leds/vibrator/duration
+    chown system system /sys/class/leds/vibrator/vmax
+    chown system system /sys/class/leds/vibrator/waveform_index
+    chown system system /sys/class/leds/vibrator/rtp
 
     start vendor.qti.vibrator
