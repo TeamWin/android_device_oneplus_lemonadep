@@ -32,19 +32,19 @@ on init
     # Create location for fs_mgr to store abbreviated output from filesystem
     # checker programs.
     mkdir /dev/fscklogs 0770 root system
-    setprop vendor.usb.use_ffs_mtp 1
     exec u:r:recovery:s0 -- /system/bin/load-mod.sh
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    write /proc/touchpanel/tp_fw_update 0
+    # write /proc/touchpanel/tp_fw_update 0
     write /sys/class/backlight/panel0-backlight/brightness 200
 
     # Mount firmware
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+
     # This must be under on fs, otherwise update_engine wont map the partitions and exit installation
     symlink /dev/block/bootdevice/by-name/oem_stanvbk /dev/block/bootdevice/by-name/oem_stanvbk_a
     symlink /dev/block/bootdevice/by-name/oem_stanvbk /dev/block/bootdevice/by-name/oem_stanvbk_b
@@ -58,18 +58,17 @@ on fs
 on boot
     exec u:r:recovery:s0 -- /system/bin/variant-script.sh
     exec u:r:recovery:s0 -- /system/bin/set-timestamp.sh
-    setprop sys.usb.config adb
 
 on property:twrp.modules.loaded=true
     # Load ADSP firmware for PMIC
-    wait /sys/kernel/boot_adsp/boot 2
+    wait /sys/kernel/boot_adsp/boot 1
     write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery 2
+    wait /sys/class/power_supply/battery 1
     start health-hal-2-1
 
-    wait /sys/class/leds/vibrator/ram_update 2
+    wait /sys/class/leds/vibrator/ram_update 1
     write /sys/class/leds/vibrator/ram_update 1
-    wait /sys/class/leds/vibrator/activate 2
+    wait /sys/class/leds/vibrator/activate 1
     chown system system /sys/class/leds/vibrator/activate
     chown system system /sys/class/leds/vibrator/state
     chown system system /sys/class/leds/vibrator/duration
