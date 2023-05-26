@@ -38,12 +38,14 @@ on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # write /proc/touchpanel/tp_fw_update 0
+    #write /proc/touchpanel/tp_fw_update 0
     write /sys/class/backlight/panel0-backlight/brightness 200
 
-    # Mount firmware
+    # Copy firmware and umount to enable flashing of modem in fastbootd
     mkdir /firmware
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /mnt ro
+    exec u:r:recovery:s0 -- /system/bin/bash -c "if ! /system/bin/grep -Fq twrpfastboot /proc/cmdline; then cp -r /mnt/image/adsp.* /vendor/firmware/ ; fi"
+    umount /mnt
 
     # This must be under on fs, otherwise update_engine wont map the partitions and exit installation
     symlink /dev/block/bootdevice/by-name/oem_stanvbk /dev/block/bootdevice/by-name/oem_stanvbk_a
