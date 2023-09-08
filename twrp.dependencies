@@ -2,7 +2,11 @@
   {
     "remote": "TeamWin",
     "repository": "android_device_oneplus_sm8350-common",
-    "target_path": "device/oneplus/sm8350-common",
-    "branch": "android-11"
+    "target_path": "device/oneplus/sm8350-common"
+  }
+  {
+    "remote": "los",
+    "repository": "android_hardware_oplus",
+    "target_path": "hardware/oplus"
   }
 ]
