@@ -42,10 +42,10 @@ on fs
     write /sys/class/backlight/panel0-backlight/brightness 200
 
     # Copy firmware and umount to enable flashing of modem in fastbootd
-    mkdir /firmware
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /mnt ro
-    exec u:r:recovery:s0 -- /system/bin/bash -c "if ! /system/bin/grep -Fq twrpfastboot /proc/cmdline; then cp -r /mnt/image/adsp.* /vendor/firmware/ ; fi"
-    umount /mnt
+    #mkdir /mnt/firmware
+    #mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /mnt/firmware ro
+    #exec u:r:recovery:s0 -- /system/bin/bash -c "if ! /system/bin/grep -Fq twrpfastboot /proc/cmdline; then cp -r /mnt/firmware/image/adsp.* /firmware/image ; fi"
+    #umount /mnt/firmware
 
     # This must be under on fs, otherwise update_engine wont map the partitions and exit installation
     symlink /dev/block/bootdevice/by-name/oem_stanvbk /dev/block/bootdevice/by-name/oem_stanvbk_a
@@ -62,11 +62,9 @@ on boot
     exec u:r:recovery:s0 -- /system/bin/set-timestamp.sh
 
 on property:twrp.modules.loaded=true
-    # Load ADSP firmware for PMIC
-    wait /sys/kernel/boot_adsp/boot 1
-    write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery 1
-    start health-hal-2-1
+    # Create a delay to prevent "deadlock," where services and libs are loaded from ROMs vendor partition,
+    # which can't be unmounted. This results in massive lags introduced by the vibrator service.
+    wait /sys/class/leds/vibrator/wait_dummy 4
 
     wait /sys/class/leds/vibrator/ram_update 1
     write /sys/class/leds/vibrator/ram_update 1
@@ -77,5 +75,10 @@ on property:twrp.modules.loaded=true
     chown system system /sys/class/leds/vibrator/vmax
     chown system system /sys/class/leds/vibrator/waveform_index
     chown system system /sys/class/leds/vibrator/rtp
-
     start vendor.qti.vibrator
+
+    # Load ADSP firmware for PMIC
+    wait /sys/kernel/boot_adsp/boot 1
+    write /sys/kernel/boot_adsp/boot 1
+    wait /sys/class/power_supply/battery 1
+    start health-hal-2-1
