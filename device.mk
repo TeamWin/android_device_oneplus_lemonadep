@@ -45,6 +45,9 @@ TW_INCLUDE_NTFS_3G := true
 TW_USE_TOOLBOX := true
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
+TW_INCLUDE_LPDUMP := true
+TW_INCLUDE_LPTOOLS := true
+TW_INCLUDE_FB2PNG := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_Y_OFFSET := 110
 TW_H_OFFSET := -110
@@ -61,7 +64,7 @@ TW_BACKUP_EXCLUSIONS := /data/fonts/,/data/nandswap
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
 TW_HAS_MTP := true
 
-TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_BRIGHTNESS_PATH := /sys/class/backlight/panel0-backlight/brightness
 TW_DEFAULT_BRIGHTNESS := 1500
 TW_MAX_BRIGHTNESS := 4095
 
