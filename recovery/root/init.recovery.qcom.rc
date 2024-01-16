@@ -26,6 +26,7 @@
 #
 
 import /init.recovery.qcom_decrypt.rc
+import /vendor.qti.hardware.vibrator.service.oplus.rc
 
 service variant-script /system/bin/variant-script.sh
     user root
@@ -40,6 +41,9 @@ service overrideprops /system/bin/set-timestamp.sh
     disabled
     oneshot
     seclabel u:r:recovery:s0
+
+on early-init
+    insmod /vendor/lib/modules/msm_drm.ko dsi_display0=qcom,mdss_dsi_samsung_amb670yf01_dsc_cmd:
 
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
@@ -74,3 +78,29 @@ on property:twrp.modules.loaded=true
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
     start health-hal-2-1
+
+    wait /sys/class/leds/vibrator/activate
+    #wait /sys/class/leds/vibrator/brightness
+    #wait /sys/class/leds/vibrator/rtp
+    #wait /sys/class/leds/vibrator/vmax
+    #wait /sys/class/leds/vibrator/waveform_index
+    #wait /sys/class/leds/vibrator/state
+    #wait /sys/class/leds/vibrator/duration
+
+    #write /sys/class/leds/vibrator/activate 0
+    #write /sys/class/leds/vibrator/rtp 0
+    #write /sys/class/leds/vibrator/vmax 1600
+    #write /sys/class/leds/vibrator/waveform_index 1
+    #write /sys/class/leds/vibrator/brightness 1
+    #write /sys/class/leds/vibrator/duration 80
+    #write /sys/class/leds/vibrator/state 1
+
+    #chown system system /sys/class/leds/vibrator/activate
+    chown system system /sys/class/leds/vibrator/brightness
+    chown system system /sys/class/leds/vibrator/rtp
+    chown system system /sys/class/leds/vibrator/vmax
+    chown system system /sys/class/leds/vibrator/waveform_index
+    chown system system /sys/class/leds/vibrator/state
+    chown system system /sys/class/leds/vibrator/duration
+
+    start vendor.qti.vibrator
