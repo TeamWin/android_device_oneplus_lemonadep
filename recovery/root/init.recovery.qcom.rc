@@ -65,8 +65,8 @@ on fs
 
 on boot
     start variant-script
-    setprop sys.usb.config mtp,adb
     start overrideprops
+    setprop sys.usb.config mtp,adb
 
 on property:twrp.modules.loaded=true
     # Load ADSP firmware for PMIC
